@@ -44,6 +44,16 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: admin
     depends_on:
       - prometheus
+  k6:
+    image: grafana/k6:0.50.0
+    command: ["run", "/scripts/load.test.js"]
+    volumes:
+      - ./k6:/scripts:ro
+    depends_on:
+      - api
+    networks:
+      - default
+
 
 volumes:
   redis-data:
